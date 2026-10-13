@@ -2,6 +2,7 @@
 
 namespace Italofantone\Incidents\Actions;
 
+use Italofantone\Incidents\Data\IncidentAnalysisDTO;
 use Italofantone\Incidents\Enums\IncidentCategory;
 use Italofantone\Incidents\Enums\IncidentPriority;
 use Italofantone\Incidents\Enums\IncidentStatus;
@@ -11,16 +12,16 @@ class CreateIncident
 {
     public function execute(
         string $description,
-        array $analysis,
+        IncidentAnalysisDTO $analysis,
     ): Incident {
         return Incident::create([
-            'title' => $analysis['title'],
-            'category' => IncidentCategory::from($analysis['category']),
+            'title' => $analysis->title,
+            'category' => IncidentCategory::from($analysis->category),
             'status' => IncidentStatus::OPEN,
-            'priority' => IncidentPriority::from($analysis['priority']),
+            'priority' => IncidentPriority::from($analysis->priority),
             'description' => $description,
-            'impact' => $analysis['impact'],
-            'recommendations' => $analysis['recommendations']
+            'impact' => $analysis->impact,
+            'recommendations' => $analysis->recommendations,
         ]);
     }
 }
